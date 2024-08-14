@@ -1,0 +1,203 @@
+/* Ensure there's enough space for the fixed header */
+
+
+/* Container styling for tweets */
+.container-card {
+  width: 100%;
+  max-width: 600px; /* Adjust max-width as needed */
+  margin: 0 auto;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #ffffff;
+  margin-bottom: 20px;
+  opacity: 0; /* Start invisible for fade-in effect */
+  transform: translateY(20px); /* Start with a slight offset for smooth animation */
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Smooth fade and slide-in */
+}
+
+/* Fade in and slide up animation when tweet is loaded */
+.container-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Styling for tweet images */
+.container-card img {
+  width: 50px; /* Adjust image size as needed */
+  height: 50px;
+  border-radius: 50%; /* Circular image */
+  margin-right: 15px; /* Space between image and content */
+}
+
+/* Styling for tweet content */
+.container-card .tweet {
+  display: flex;
+  flex-direction: column; /* Change to column to stack items */
+  margin-bottom: 10px;
+}
+
+/* Top section of the tweet */
+.container-card .tweet .top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+/* Author section */
+.container-card .tweet .top .author {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1da1f2;
+}
+
+/* Date section */
+.container-card .tweet .top .date {
+  font-size: 12px;
+  color: #999999;
+  margin-left: auto; /* Push date to the right */
+}
+
+/* Content of the tweet */
+.container-card .tweet .content {
+  font-size: 14px;
+  color: #333333;
+}
+
+/* Loading animation */
+.loading {
+  text-align: center;
+  color: #aaaaaa;
+  margin-top: 20px;
+}
+
+/* Adjust for smaller screens */
+@media (max-width: 768px) {
+  .container-card {
+    padding: 10px;
+  }
+}
+
+/* Adjusting the position of the end-of-tweets message */
+.center {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.entire-container{
+  margin-top: 70px;
+}
+.fixed-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #1DA1F2; /* Twitter blue */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.fixed-button:hover {
+  background-color: #0d95e8;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  position: relative;
+}
+
+textarea {
+  width: 95%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  height: 150px;
+}
+
+button {
+  background-color: #1DA1F2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0d95e8;
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Notification bar styles */
+.notification-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #1DA1F2; /* Twitter blue */
+  color: white;
+  padding: 10px;
+  text-align: center;
+  transform: translateY(-100%); /* Initially hidden above the screen */
+  transition: transform 0.5s ease-in-out; /* Smooth slide down */
+  z-index: 1000;
+}
+
+.notification-bar.show {
+  transform: translateY(0); /* Slide down into view */
+}
+
+.notification-bar p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.notification-bar button {
+  background-color: #0d95e8;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+.notification-bar button:hover {
+  background-color: #1a8cd8;
+}

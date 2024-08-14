@@ -1,0 +1,138 @@
+/* General container styling */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    padding: 10px;
+    background-color: #f9f9f9; /* Light background color */
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* Message list container for scrolling */
+.message-list {
+    flex: 1; /* Takes up available space */
+    overflow-y: auto; /* Makes this container scrollable */
+    padding-right: 10px; /* To avoid content being hidden under scrollbar */
+    margin-bottom: 75px; /* Space for the input container */
+}
+
+/* Message card styling */
+.message-card-sender,
+.message-card-receiver {
+    max-width: 60%; /* Adjust as needed */
+    padding: 10px;
+    border-radius: 20px; /* Rounded corners for the chat bubbles */
+    margin: 5px 0;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
+    word-break: break-word;
+    margin-bottom: 20px;
+}
+
+/* Styling for messages sent by the current user */
+.message-card-sender {
+    background-color: #007bff; /* Blue background for sent messages */
+    color: white;
+    align-self: flex-end; /* Align to the right */
+    margin-left: auto;
+    border-top-right-radius: 0; /* Optional: Remove top-right radius */
+}
+
+/* Styling for messages received from others */
+.message-card-receiver {
+    background-color: #e1e1e1; /* Light grey background for received messages */
+    color: black;
+    align-self: flex-start; /* Align to the left */
+    margin-right: auto;
+    border-top-left-radius: 0; /* Optional: Remove top-left radius */
+}
+
+/* Message text styling */
+.message-msg-sender,
+.message-msg-receiver {
+    font-size: 14px; /* Adjust text size */
+    line-height: 1.4;
+}
+
+/* Timestamp styling */
+.message-time {
+    font-size: 13px;
+    color: black ;/* Adjust as needed for visibility */
+    position: absolute; /* Position relative to the nearest positioned ancestor */
+    bottom: 5px; /* Distance from the bottom of the parent */
+    right: 10px; /* Distance from the right edge of the parent */
+}
+
+/* Input container styling */
+.input-container {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    padding: 10px;
+    background-color: white;
+    border-top: 1px solid #ddd; /* Subtle border at the top */
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
+    box-sizing: border-box;
+    z-index: 1; /* Ensure it stays above other content */
+}
+
+/* Input field styling */
+input[type="text"] {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Send button styling */
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: #007bff; /* Button color */
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+/* Button hover effect */
+button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Additional responsive design tweaks */
+@media (max-width: 600px) {
+    .message-card-sender,
+    .message-card-receiver {
+        max-width: 90%; /* Full width on small screens */
+    }
+
+    .input-container {
+        flex-direction: column;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+.background-image {
+    position: fixed; /* Fix the position of the image */
+    top: 0; /* Align to the top */
+    left: 0; /* Align to the left */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    object-fit: cover; /* Scale the image to cover the entire area */
+    z-index: -1; /* Place the image behind other content */
+    opacity: 0.5; /* Optional: Adjust opacity for transparency */
+  }

@@ -1,0 +1,138 @@
+/* General styles for the profile component */
+.profile-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    position: relative; /* Make sure to position relative for pseudo-element */
+    overflow: hidden; /* Ensure border animation stays within bounds */
+    margin-top: 5px;
+}
+
+/* Create the animated border effect */
+.profile-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 5px solid transparent; /* Initial border */
+    border-radius: 10px; /* Match the border radius of the container */
+    box-sizing: border-box; /* Include border in element's box size */
+    z-index: -1; /* Ensure the border is behind the content */
+    animation: borderAnimation 3s linear infinite; /* Add animation */
+}
+
+/* Create border animation */
+@keyframes borderAnimation {
+    0% {
+        border-color: white;
+    }
+    50% {
+        border-color: #1DA1F2; /* Twitter blue */
+    }
+    100% {
+        border-color: white;
+    }
+}
+
+/* Profile header styles */
+.profile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Space between items */
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.profile-picture-container {
+    margin-right: 20px;
+}
+
+.profile-picture {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-name {
+    font-size: 24px;
+    margin: 0;
+}
+
+.profile-bio {
+    margin: 10px 0;
+    color: #555;
+}
+
+/* Adjust edit-profile-button to be aligned to the right */
+.edit-profile-button {
+    background-color: #1DA1F2; /* Twitter blue */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 600px; /* Pushes the button to the right */
+}
+
+.edit-profile-button:hover {
+    background-color: #0d95e8;
+}
+
+.profile-stats {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.stats-item {
+    text-align: center;
+}
+
+.stats-count {
+    font-size: 24px;
+    margin: 0;
+}
+
+.stats-label {
+    margin: 0;
+    color: #555;
+}
+
+.profile-tweets {
+    padding-top: 20px;
+}
+
+.tweets-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.tweet-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.tweet-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.tweet-content {
+    margin: 0;
+}
