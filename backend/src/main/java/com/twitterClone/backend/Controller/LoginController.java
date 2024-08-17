@@ -14,7 +14,7 @@ public class LoginController {
     private LoginService loginservice ;
     @Autowired
     private BasicWSController basicWSController;
-    private record LoginRequest(String email, String password, String username) {}
+    private record LoginRequest(String email, String password) {}
 
     public LoginController(LoginService loginservice) {
         this.loginservice = loginservice;
@@ -31,7 +31,7 @@ public class LoginController {
 
     @PostMapping(path = "/login")
     public ResponseEntity<?> Login(@RequestBody LoginRequest loginRequest){
-        Details user = loginservice.userFind(loginRequest.email,loginRequest.password,loginRequest.username);
+        Details user = loginservice.userFind(loginRequest.email,loginRequest.password);
         if(user==null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         return ResponseEntity.ok(user);
     }

@@ -68,4 +68,9 @@ public class TweetController {
         lastPoll = current;
         return latest;
     }
+
+    @GetMapping(path="/getalltweets")
+    public void getAllTweets(Long src){
+        //tweetRepository.findByDetails(src);
+    }
 }

@@ -1,7 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../css/profile.css'; 
+import { getProfileDetails } from '../api/ProfileApiService';
+
 
 function ProfileComponent() {
+  var info = [];
+
+  useEffect(()=>{
+    const getProfileInfo = async () =>{
+      try{
+        const response = await getProfileDetails(sessionStorage.getItem("id"));
+        info = response.data;
+        console.log(info)
+      } catch (err) {
+        console.log(err)
+      }
+      
+    }
+    getProfileInfo();
+  },[])
+
+
+
+
+
   return (
     <div className="profile-container">
       <header className="profile-header">

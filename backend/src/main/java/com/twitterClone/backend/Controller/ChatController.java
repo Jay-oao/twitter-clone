@@ -2,6 +2,7 @@ package com.twitterClone.backend.Controller;
 
 import com.twitterClone.backend.Entity.Details;
 import com.twitterClone.backend.Resource.ChatRepository;
+import com.twitterClone.backend.Resource.FollowRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,9 @@ public class ChatController {
 
     @Autowired
     private ChatRepository chatRepository;
+    @Autowired
+    private FollowRepository followRepository;
+
     @GetMapping(path="/receiver")
 
     public ResponseEntity<?> getReceiverId(@RequestParam long senderId){
@@ -38,6 +42,11 @@ public class ChatController {
     @GetMapping(path="/renderMessage")
     public List<Object[]> getPreviousMessage(@RequestParam long sender,@RequestParam long receiver){
         return chatRepository.findContentAndTimestampAndSenderBySenderAndReceiver(sender, receiver);
+    }
+
+    @GetMapping(path="/newChatSearch")
+    public List<Details> getUsers(@RequestParam long sender,@RequestParam String userPart){
+        return followRepository.findFollowingsByUsernameLike(sender,userPart);
     }
 
 }

@@ -3,14 +3,11 @@ import { Formik, Form, Field } from 'formik';
 import '../css/modal.css';
 import {  signin } from '../api/SignInApiService';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../security/AuthContext';
-
 
 const SigninModal = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const auth = useAuth();
 
   const handleSubmit = (values, { setSubmitting }) => {
 
@@ -23,7 +20,6 @@ const SigninModal = ({ isOpen, onClose }) => {
       .then(
         (response)=>{
           if(response.status===200){
-            auth.setAuthenticated(true);
             sessionStorage.setItem("username",response.data.username)
             sessionStorage.setItem("id",response.data.id)
             sessionStorage.setItem("email",response.data.email);

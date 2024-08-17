@@ -12,3 +12,10 @@ export const renderChats = (senderId,receiverId) => apiClient.get('/renderMessag
     receiver:receiverId
   }
 })
+
+export const startChat = (senderId,part) => apiClient.get('/newChatSearch',{
+  params:{
+    sender : senderId,
+    userPart : part
+  }
+})

@@ -18,10 +18,9 @@ public class LoginResource  {
     public void insert(Details details){entityManager.merge(details);}
 
     public Details findByEmail(String email,String username) {
-        String jpql = "SELECT d FROM Details d WHERE d.email = :email OR d.username=:username";
+        String jpql = "SELECT d FROM Details d WHERE d.email = :email";
         TypedQuery<Details> query = entityManager.createQuery(jpql, Details.class);
         query.setParameter("email", email);
-        query.setParameter("username",username);
 
         try {
             return query.getSingleResult();
