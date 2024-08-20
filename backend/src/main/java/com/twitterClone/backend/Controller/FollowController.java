@@ -4,6 +4,7 @@ import com.twitterClone.backend.Entity.Details;
 import com.twitterClone.backend.Entity.Follow;
 import com.twitterClone.backend.Entity.Tweets;
 import com.twitterClone.backend.POJO.Profile;
+import com.twitterClone.backend.POJO.TweetResponseInfo;
 import com.twitterClone.backend.Resource.DetailsRepository;
 import com.twitterClone.backend.Resource.FollowRepository;
 import com.twitterClone.backend.Resource.TweetRepository;
@@ -76,7 +77,7 @@ public class FollowController {
         if(user.isPresent()){
             int follow = followRepository.countByDetailsId(source);
             int followers = followRepository.countByDetailsFollowId(source);
-            List<Tweets> tweetsList = tweetRepository.findByDetailsId(source);
+            List<TweetResponseInfo> tweetsList = tweetRepository.findByDetailsId(source);
             profile.setDp(user.get().getDisplayPicture());
             profile.setBio(user.get().getBio());
             profile.setFollowing_count(follow);

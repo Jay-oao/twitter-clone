@@ -1,6 +1,7 @@
 package com.twitterClone.backend.Resource;
 
 import com.twitterClone.backend.Entity.Tweets;
+import com.twitterClone.backend.POJO.TweetResponseInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,8 +17,9 @@ public interface TweetRepository extends JpaRepository<Tweets, Long> {
 
     List<Tweets> findByTweetDateAfter(Timestamp timestamp);
 
-    @Query("SELECT t FROM Tweets t WHERE details.id = :id")
-    List<Tweets> findByDetailsId(Long id);
+    @Query("SELECT new com.twitterClone.backend.POJO.TweetResponseInfo(t.tweetDesc, t.tweetDate) FROM Tweets t WHERE t.details.id = :id ORDER BY t.tweetDate DESC")
+    List<TweetResponseInfo> findByDetailsId( Long id);
+
     Page<Tweets> findByDetailsUsername(Long id, Pageable pageable);
 
 }

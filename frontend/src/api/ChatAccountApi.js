@@ -1,4 +1,4 @@
-import { apiClient } from "./clientApi";
+import apiClient from "./clientApi";
 
 export const getChatAccounts = (sender)=>apiClient.get('/receiver',{
   params:{

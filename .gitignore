@@ -9,6 +9,9 @@ build/
 dist/
 public/static/
 
+#Environment
+application-dev.properties
+
 # Environment files
 .env
 .env.local

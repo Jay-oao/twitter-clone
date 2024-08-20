@@ -21,6 +21,7 @@ const SigninModal = ({ isOpen, onClose }) => {
         (response)=>{
           if(response.status===200){
             sessionStorage.setItem("username",response.data.username)
+            console.log(response.data);
             sessionStorage.setItem("id",response.data.id)
             sessionStorage.setItem("email",response.data.email);
             setTimeout(()=>navigate('/home'),1500)

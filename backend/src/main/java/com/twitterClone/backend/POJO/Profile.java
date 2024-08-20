@@ -15,5 +15,5 @@ public class Profile {
     private byte[] dp;
     private int follower_count;
     private int following_count;
-    private List<Tweets> tweetsList;
+    private List<TweetResponseInfo> tweetsList;
 }

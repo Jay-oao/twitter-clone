@@ -16,7 +16,7 @@ import java.util.List;
 //TODO:ONLY SUPPORTS UNIDIRECTIONAL COMMUNICATION
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:3000" ,allowCredentials = "true")
 public class ChatController {
 
     @Autowired
@@ -25,7 +25,6 @@ public class ChatController {
     private FollowRepository followRepository;
 
     @GetMapping(path="/receiver")
-
     public ResponseEntity<?> getReceiverId(@RequestParam long senderId){
         List<Details> list = chatRepository.findUniqueReceiversBySender(senderId);
         record ResultFilteredList(Long id, String username, byte[] displayPicture) {}

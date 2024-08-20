@@ -1,17 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../css/profile.css'; 
 import { getProfileDetails } from '../api/ProfileApiService';
-
+import { formatDistanceToNow, parseISO } from 'date-fns';
 
 function ProfileComponent() {
-  var info = [];
+  const [info,setInfo] = useState({});
 
   useEffect(()=>{
     const getProfileInfo = async () =>{
       try{
         const response = await getProfileDetails(sessionStorage.getItem("id"));
-        info = response.data;
-        console.log(info)
+        setInfo(response.data);
       } catch (err) {
         console.log(err)
       }
@@ -22,7 +21,12 @@ function ProfileComponent() {
 
 
 
+  const username = sessionStorage.getItem("username");
 
+  function formatTimeAgo(timestamp) {
+    const parsedDate = parseISO(timestamp);
+    return formatDistanceToNow(parsedDate, { addSuffix: true });
+  }
 
   return (
     <div className="profile-container">
@@ -35,31 +39,34 @@ function ProfileComponent() {
           />
         </div>
         <div className="profile-info">
-          <h1 className="profile-name">User Name</h1>
-          <p className="profile-bio">This is the user's bio. Add more details here.</p>
+          <h2>{username}</h2>
+          <p className="profile-bio">{info.bio}</p>
           <button className="edit-profile-button">Edit Profile</button>
         </div>
       </header>
       <section className="profile-stats">
         <div className="stats-item">
-          <p className="stats-count">123</p>
+          <p className="stats-count">{info.following_count}</p>
           <p className="stats-label">Following</p>
         </div>
         <div className="stats-item">
-          <p className="stats-count">456</p>
+          <p className="stats-count">{info.follower_count}</p>
           <p className="stats-label">Followers</p>
         </div>
       </section>
       <section className="profile-tweets">
         <h2 className="tweets-title">Tweets</h2>
         <div className="tweet-list">
-          <div className="tweet-card">
-            <p className="tweet-content">This is a sample tweet from the user.</p>
-          </div>
-          <div className="tweet-card">
-            <p className="tweet-content">Another tweet by the user.</p>
-          </div>
-          {/* Add more tweet cards as needed */}
+          {info.tweetsList  ? (
+            info.tweetsList.map((tweet, index) => (
+              <div key={index} className="tweet-card">
+                <p className="tweet-content">{tweet.tweetDesc}</p> 
+                <p className="tweet-date">{formatTimeAgo(tweet.tweetDate)}</p>
+              </div>
+            ))
+          ) : (
+            <p>No tweets available.</p> 
+          )}
         </div>
       </section>
     </div>
