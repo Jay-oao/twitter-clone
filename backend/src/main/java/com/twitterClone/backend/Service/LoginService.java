@@ -17,7 +17,7 @@ public class LoginService {
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     public Details userFind(String email,String password){
-        Details user = loginResource.findByEmail(email,password);
+        Details user = loginResource.findByEmail(email);
         boolean auth = false;
         if(user!=null){
          auth = passwordEncoder.matches(password, user.getPassword());
@@ -29,8 +29,9 @@ public class LoginService {
         }
     }
 
+
     public boolean registerUser(Details details){
-        Details existing =  loginResource.findByEmail(details.getEmail(),details.getUsername());
+        Details existing =  loginResource.findByEmail(details.getEmail());
         if(existing!=null){
             return false;
         } else {

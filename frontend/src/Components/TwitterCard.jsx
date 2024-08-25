@@ -5,6 +5,8 @@ import { fetchTweets, newTweet } from '../api/TweetApiService';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { tweetPoller } from '../api/TweetPollerService';
 import HeaderComponent from './HeaderComponent';
+import { setSession } from '../api/SignInApiService';
+import Cookies from 'js-cookie';
 
 const PAGE_SIZE = 7;
 
@@ -18,8 +20,27 @@ function TwitterCard() {
 
 
   useEffect(() => {
-    loadTweets();
-    window.addEventListener("scroll", handleScroll);
+    if(sessionStorage.getItem("email")==null){
+      const token = Cookies.get('access_token')
+      async function sessionStorageSet (token){
+        try{
+          let response = await setSession(token);
+          sessionStorage.setItem("email",response.data.email)
+          sessionStorage.setItem("id",response.data.id)
+          sessionStorage.setItem("username",response.data.username)
+          loadTweets();
+          window.addEventListener("scroll", handleScroll);
+        } catch(error){
+          console.log(error);
+        }
+      }
+      sessionStorageSet(token);
+    } else {
+      loadTweets();
+      window.addEventListener("scroll", handleScroll);
+    }
+
+    
 
     const tweetPoll = setInterval(() => {
       tweetPoller()
@@ -55,6 +76,8 @@ function TwitterCard() {
       loadTweets();
     }
   }, [page]);
+
+  
 
   const handleScroll = () => {
     if (
@@ -127,6 +150,9 @@ function TwitterCard() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+const routeToProfile = ()=>{
+  
+}
 
   return (
     <>
@@ -138,7 +164,7 @@ function TwitterCard() {
           <div className="tweet">
             <div className="top">
               <img src={`https://via.placeholder.com/50x50?text=${tweet.username}`} alt="Profile Pic" />
-              <div className="author">{tweet.username}</div>
+              <div className="author" onClick={routeToProfile}>{tweet.username}</div>
               <div className="date">{formatTimeAgo(tweet.tweetDate)}</div>
             </div>
             <div className="content">{tweet.tweetDesc}</div>

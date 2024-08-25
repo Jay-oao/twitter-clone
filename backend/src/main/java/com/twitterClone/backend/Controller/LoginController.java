@@ -1,6 +1,8 @@
 package com.twitterClone.backend.Controller;
 
 import com.twitterClone.backend.Entity.Details;
+import com.twitterClone.backend.POJO.Sessions;
+import com.twitterClone.backend.Resource.LoginResource;
 import com.twitterClone.backend.Service.LoginService;
 import com.twitterClone.backend.Utility.JwtUtility;
 import jakarta.servlet.http.Cookie;
@@ -21,7 +23,8 @@ public class LoginController {
 
     @Autowired
     private JwtUtility jwtUtility;
-
+    @Autowired
+    private LoginResource loginResource;
     public LoginController(LoginService loginservice) {
         this.loginservice = loginservice;
     }
@@ -47,6 +50,17 @@ public class LoginController {
             return ResponseEntity.ok(user);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping(path = "/session/set")
+    public ResponseEntity<?> setSessionElements(@RequestParam String token){
+        try{
+            String email = jwtUtility.extractUsername(token);
+            Sessions sessionDetails = loginResource.findSessionDetails(email);
+            return ResponseEntity.ok(sessionDetails);
+        } catch (Exception e){
+            return ResponseEntity.noContent().build();
+        }
     }
 
     private boolean generateTokens(String username, HttpServletResponse response) {

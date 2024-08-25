@@ -1,10 +1,16 @@
-import React, { useEffect, useState } from 'react';
+/*eslint-disable*/
+import React, { useEffect, useState , useMemo} from 'react';
 import '../css/profile.css'; 
 import { getProfileDetails } from '../api/ProfileApiService';
 import { formatDistanceToNow, parseISO } from 'date-fns';
+import { useParams } from 'react-router-dom';
 
 function ProfileComponent() {
   const [info,setInfo] = useState({});
+  const { profileId } = useParams();
+  useMemo(()=>{
+    console.log(profileId)
+  },[]) 
 
   useEffect(()=>{
     const getProfileInfo = async () =>{

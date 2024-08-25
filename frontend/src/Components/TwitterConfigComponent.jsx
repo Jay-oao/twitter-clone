@@ -43,6 +43,7 @@ function TwitterConfigComponent() {
           <Route path='chat' element={<ChatHome/>}></Route>
           <Route path='chat/dm' element={<ChatCard/>}></Route>
           <Route path='/profile' element={<ProfileComponent/>}/>
+          <Route path="/profile/:profileId" element={<ProfileComponent />} />
         </Routes>
       
       </AuthProvider>
