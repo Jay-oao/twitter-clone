@@ -5,3 +5,10 @@ export const getProfileDetails = (senderId) => apiClient.get('/profileDetails',{
         source : senderId
     }
   })
+
+  export const followProfile = (src , destination) => apiClient.post('/follow',
+  {
+    src : src,
+    destination : destination
+  }
+)

@@ -1,37 +1,59 @@
-/*eslint-disable*/
-import React, { useEffect, useState , useMemo} from 'react';
+import React, { useEffect, useState } from 'react';
 import '../css/profile.css'; 
-import { getProfileDetails } from '../api/ProfileApiService';
+import { followProfile, getProfileDetails } from '../api/ProfileApiService'; // Assume there's an updateProfile API
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { useParams } from 'react-router-dom';
 
 function ProfileComponent() {
-  const [info,setInfo] = useState({});
+  const [info, setInfo] = useState({});
   const { profileId } = useParams();
-  useMemo(()=>{
-    console.log(profileId)
-  },[]) 
+  const [username, setUsername] = useState('');
+  const [bio, setBio] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
 
-  useEffect(()=>{
-    const getProfileInfo = async () =>{
-      try{
-        const response = await getProfileDetails(sessionStorage.getItem("id"));
+  useEffect(() => {
+    const getProfileInfo = async () => {
+      try {
+        const response = await getProfileDetails(profileId || sessionStorage.getItem("id"));
         setInfo(response.data);
+        setUsername(response.data.username);
+        setBio(response.data.bio);
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
-      
-    }
+    };
     getProfileInfo();
-  },[])
-
-
-
-  const username = sessionStorage.getItem("username");
+  }, [profileId]);
 
   function formatTimeAgo(timestamp) {
     const parsedDate = parseISO(timestamp);
     return formatDistanceToNow(parsedDate, { addSuffix: true });
+  }
+
+  function follow() {
+    followProfile(sessionStorage.getItem("id"), profileId)
+      .then(response => console.log(response))
+      .catch(error => console.log(error));
+  }
+
+  function handleEditClick() {
+    setIsEditing(true);
+  }
+
+  function handleSaveClick() {
+    //const updatedInfo = { username, bio };
+    // updateProfile(sessionStorage.getItem("id"), updatedInfo) 
+    //   .then(response => {
+    //     setInfo(response.data);
+    //     setIsEditing(false);
+    //   })
+    //   .catch(error => console.log(error));
+  }
+
+  function handleCancelClick() {
+    setUsername(info.username);
+    setBio(info.bio);
+    setIsEditing(false);
   }
 
   return (
@@ -45,9 +67,32 @@ function ProfileComponent() {
           />
         </div>
         <div className="profile-info">
-          <h2>{username}</h2>
-          <p className="profile-bio">{info.bio}</p>
-          <button className="edit-profile-button">Edit Profile</button>
+          {isEditing ? (
+            <>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="profile-input"
+              />
+              <textarea
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
+                className="profile-textarea"
+              />
+              <button className="save-button" onClick={handleSaveClick}>Save</button>
+              <button className="cancel-button" onClick={handleCancelClick}>Cancel</button>
+            </>
+          ) : (
+            <>
+              <h2>{username}</h2>
+              <p className="profile-bio">{bio}</p>
+              {(profileId === undefined || profileId === sessionStorage.getItem("id")) && 
+                <button className="edit-profile-button" onClick={handleEditClick}>Edit Profile</button>}
+              {profileId !== undefined && profileId !== sessionStorage.getItem("id") && 
+                <button className='follow' onClick={follow}>Follow</button>}
+            </>
+          )}
         </div>
       </header>
       <section className="profile-stats">
@@ -63,7 +108,7 @@ function ProfileComponent() {
       <section className="profile-tweets">
         <h2 className="tweets-title">Tweets</h2>
         <div className="tweet-list">
-          {info.tweetsList  ? (
+          {info.tweetsList ? (
             info.tweetsList.map((tweet, index) => (
               <div key={index} className="tweet-card">
                 <p className="tweet-content">{tweet.tweetDesc}</p> 

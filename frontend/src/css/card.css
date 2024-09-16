@@ -201,3 +201,14 @@ button:hover {
 .notification-bar button:hover {
   background-color: #1a8cd8;
 }
+
+.author {
+  cursor: pointer; 
+  text-decoration: none; 
+  color: inherit; 
+}
+
+.author:hover {
+  text-decoration: underline;
+  text-decoration-color: blue; 
+}

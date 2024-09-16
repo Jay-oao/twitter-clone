@@ -80,14 +80,14 @@
 }
 
 /* Input field styling */
-input[type="text"] {
+/* input[type="text"] {
     width: 80%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 20px;
     font-size: 14px;
     box-sizing: border-box;
-}
+} */
 
 /* Send button styling */
 button {

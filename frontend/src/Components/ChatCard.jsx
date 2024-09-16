@@ -20,9 +20,9 @@ function ChatCard() {
 
     useEffect(() => {
         const stompClient = new Client({
-            webSocketFactory: () => new SockJS('http://localhost:8080/message'),
+            webSocketFactory: () => new SockJS('http://localhost:8080/m'),
             onConnect: () => {
-                console.log('Connected to WebSocket');
+                //console.log('Connected to WebSocket');
 
                 stompClient.subscribe('/topic/'+sessionStorage.getItem("id"), (message) => {
                     if (message.body) {

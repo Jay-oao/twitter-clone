@@ -1,0 +1,8 @@
+#Rate limiting Configurations
+resilience4j:
+  ratelimiter:
+    instances:
+      rateLimiter:
+        limitForPeriod: 100  # Number of requests
+        limitRefreshPeriod: 1s  # Time window for the limit
+        timeoutDuration: 3s  # Timeout for waiting requests

@@ -3,6 +3,7 @@ package com.twitterClone.backend.Controller;
 import com.twitterClone.backend.Entity.Details;
 import com.twitterClone.backend.Entity.Follow;
 import com.twitterClone.backend.Entity.Tweets;
+import com.twitterClone.backend.POJO.FollowRequest;
 import com.twitterClone.backend.POJO.Profile;
 import com.twitterClone.backend.POJO.TweetResponseInfo;
 import com.twitterClone.backend.Resource.DetailsRepository;
@@ -41,9 +42,9 @@ public class FollowController {
 
     @Transactional
     @PostMapping(path = "/follow")
-    public ResponseEntity<String> follow(@RequestParam Long src, @RequestParam Long destination) {
-        Optional<Details> srcUserOpt = detailsRepository.findById(src);
-        Optional<Details> destUserOpt = detailsRepository.findById(destination);
+    public ResponseEntity<String> follow(@RequestBody FollowRequest followRequest) {
+        Optional<Details> srcUserOpt = detailsRepository.findById(followRequest.getSrc());
+        Optional<Details> destUserOpt = detailsRepository.findById(followRequest.getDestination());
 
         if (!srcUserOpt.isPresent()) {
             return new ResponseEntity<>("Source user not found", HttpStatus.NOT_FOUND);
@@ -56,7 +57,7 @@ public class FollowController {
         Details srcUser = srcUserOpt.get();
         Details destUser = destUserOpt.get();
 
-        List<Follow> existingFollow = followRepository.findByDetailsAndFollow(src, destination);
+        List<Follow> existingFollow = followRepository.findByDetailsAndFollow(followRequest.getSrc(), followRequest.getDestination());
         if (!existingFollow.isEmpty()) {
             return new ResponseEntity<>("Already following", HttpStatus.CONFLICT);
         }
@@ -78,6 +79,7 @@ public class FollowController {
             int follow = followRepository.countByDetailsId(source);
             int followers = followRepository.countByDetailsFollowId(source);
             List<TweetResponseInfo> tweetsList = tweetRepository.findByDetailsId(source);
+            profile.setUsername(user.get().getUsername());
             profile.setDp(user.get().getDisplayPicture());
             profile.setBio(user.get().getBio());
             profile.setFollowing_count(follow);

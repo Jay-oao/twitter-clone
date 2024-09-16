@@ -1,61 +1,54 @@
+/* Modal content */
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  outline: none;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Close button for modal */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #333;
+}
+
+/* Container for main page */
+.container {
+  text-align: center;
+  padding: 20px;
+}
+
+/* Logo styling */
+.logo img {
+  width: 80px;
+  height: auto;
+}
+
+/* General button styles */
+button {
+  margin: 10px;
+}
+
+/* Page background and overall layout */
 .App {
-    /* Your regular styles for the page */
-    font-family: Arial, sans-serif;
-    text-align: center;
-    padding: 20px;
-  }
-  
-  .blur {
-    filter: blur(4px); /* Adjust the blur amount as needed */
-    pointer-events: none; /* Ensures clicks pass through to elements behind */
-  }
-  
-  button {
-    padding: 10px 20px;
-    background-color: #1da1f2;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 20px;
-  }
-  
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .modal {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    height: 500px;
-    width: 650px; 
-    overflow: auto;
-    position: relative;
-    z-index: 1100;
-  }
-  
-  .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    color: #333;
-  }
-  
-.heading-modal{
-  color: black;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+.blur {
+  filter: blur(4px);
+  pointer-events: none;
 }

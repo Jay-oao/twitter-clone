@@ -1,113 +1,141 @@
-import React, { useState ,useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
-import '../css/modal.css';
+import { TextField, Button, Modal, Typography, IconButton, Box } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import { signup } from '../api/SignUpApiService';
 import { useAuth } from '../security/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-
-
 const SignupModal = ({ isOpen, onClose }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [username,setUsername] = useState('')
   const auth = useAuth();
   const navigate = useNavigate();
-  
-  function handleSubmit() {
-    const date = new Date()
+
+  const handleSubmit = (values, { setSubmitting, setErrors }) => {
+    const date = new Date();
     const details = {
-      username: username,
-      password:password,
-      email: email,
-      bio:"Default Generated Bio",
-      date_create:date,
-      date_update:date,
+      username: values.username,
+      password: values.password,
+      email: values.email,
+      bio: "Default Generated Bio",
+      date_create: date,
+      date_update: date,
     };
+
     signup(details)
       .then(response => {
         if (response.status === 200) {
-          auth.setUsername(username)
-          auth.setAuthenticated(true)
-          
-          setTimeout(()=>{
-            navigate('/home')
-          },5000)
-        
+          auth.setUsername(values.username);
+          auth.setAuthenticated(true);
+          setTimeout(() => navigate('/home'), 5000);
         }
       })
-      .catch(error => console.log(error));
-  }
+      .catch(error => {
+        console.error("Signup error:", error);
+        setErrors({ general: 'An error occurred during signup. Please try again.' });
+      })
+      .finally(() => setSubmitting(false));
+  };
 
   useEffect(() => {
     if (!isOpen) {
-      setEmail('')
-      setPassword('')
-      setUsername('')
+      // Formik will handle resetting form values
     }
   }, [isOpen]);
 
   if (!isOpen) return null;
 
-
-
   return (
-    <div className="modal-overlay">
-      <div className="modal">
-        <button className="close-btn" onClick={onClose}>Close</button>
-        <div className="modal-content">
-          <h1 className='heading-modal'>Sign up</h1>
-          <h2>Access the world of 'X' clone now</h2>
-          <Formik
-            initialValues={{email,password}}
-            onSubmit={handleSubmit}
-          >
-            {() => (
-              <Form>
+    <Modal open={isOpen} onClose={onClose}>
+      <Box className="modal-content" sx={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '90%',
+        maxWidth: 600,
+        bgcolor: 'background.paper',
+        p: 3,
+        borderRadius: 2,
+        boxShadow: 3,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}>
+        <IconButton className="close-btn" onClick={onClose} sx={{ position: 'absolute', top: 10, right: 10 }}>
+          <CloseIcon />
+        </IconButton>
+        <Typography variant="h4" component="h1" gutterBottom>
+          Sign Up
+        </Typography>
+        <Typography variant="subtitle1" paragraph>
+          Access the world of 'X' clone now
+        </Typography>
+        <Formik
+          initialValues={{ email: '', password: '', username: '' }}
+          onSubmit={handleSubmit}
+        >
+          {({ isSubmitting, errors }) => (
+            <Form style={{ width: '100%' }}>
+              {errors.general && <Typography color="error" sx={{ mb: 2 }}>{errors.general}</Typography>}
 
-                <fieldset className="form-group">
-                  <label>Email</label>
-                  <Field
-                    type="text"
-                    className="form-control"
-                    name="email"
-                    placeholder="JohnDoe@email.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </fieldset>
+              <Field
+                name="email"
+                as={TextField}
+                fullWidth
+                margin="normal"
+                id="email"
+                label="Email"
+                type="email"
+                placeholder="JohnDoe@email.com"
+                variant="outlined"
+                InputLabelProps={{ shrink: true }}
+                autoComplete="email" 
+              />
 
-                <fieldset className="form-group">
-                  <label>Username</label>
-                  <Field
-                    type="text"
-                    className="form-control"
-                    name="username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                  />
-                </fieldset>
+              <Field
+                name="username"
+                as={TextField}
+                fullWidth
+                margin="normal"
+                id="username"
+                label="Username"
+                type="text"
+                variant="outlined"
+                InputLabelProps={{ shrink: true }}
+                autoComplete="username" 
+              />
 
-                <fieldset className="form-group">
-                  <label>Password</label>
-                  <Field
-                    type="password"
-                    className="form-control"
-                    name="password"
-                    placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </fieldset>
-                <button type="submit" className="btn btn-primary">Sign In</button>
-              </Form>
-            )}
-          </Formik>
-          {auth.Authenticated && <div>User Created : Redirecting to home page </div>}
-        </div>
-      </div>
-    </div>
+              <Field
+                name="password"
+                as={TextField}
+                fullWidth
+                margin="normal"
+                id="password"
+                label="Password"
+                type="password"
+                placeholder="Enter your password"
+                variant="outlined"
+                InputLabelProps={{ shrink: true }}
+                autoComplete="new-password" 
+              />
+
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                disabled={isSubmitting}
+                fullWidth
+                sx={{ mt: 2 }}
+              >
+                Sign Up
+              </Button>
+            </Form>
+          )}
+        </Formik>
+        {auth.Authenticated && <Typography sx={{ mt: 2 }}>User Created: Redirecting to home page</Typography>}
+      </Box>
+    </Modal>
   );
 };
 
-export default SignupModal
+export default SignupModal;

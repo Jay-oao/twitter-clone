@@ -7,6 +7,7 @@ import { tweetPoller } from '../api/TweetPollerService';
 import HeaderComponent from './HeaderComponent';
 import { setSession } from '../api/SignInApiService';
 import Cookies from 'js-cookie';
+import {  useNavigate } from 'react-router-dom';
 
 const PAGE_SIZE = 7;
 
@@ -17,7 +18,7 @@ function TwitterCard() {
   const [callApi, setCallApi] = useState(true);
   const [newTweetAvailable, setNewTweetAvailable] = useState(false);
   const [latestTweets, setLatestTweets] = useState([]);
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     if(sessionStorage.getItem("email")==null){
@@ -101,6 +102,7 @@ function TwitterCard() {
       .then(response => {
         const transformedTweets = response.data.map((tweet) => ({
           username: tweet.details.username,
+          userId : tweet.details.id,
           tweetDesc: tweet.tweetDesc,
           tweetDate: tweet.tweetDate,
           tweetId: tweet.tweetId
@@ -150,9 +152,10 @@ function TwitterCard() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-const routeToProfile = ()=>{
-  
+const routeToProfile = (id)=>{
+  navigate("/profile/"+id)
 }
+  
 
   return (
     <>
@@ -164,7 +167,7 @@ const routeToProfile = ()=>{
           <div className="tweet">
             <div className="top">
               <img src={`https://via.placeholder.com/50x50?text=${tweet.username}`} alt="Profile Pic" />
-              <div className="author" onClick={routeToProfile}>{tweet.username}</div>
+              <div className="author" onClick={()=>routeToProfile(tweet.userId)}>{tweet.username}</div>
               <div className="date">{formatTimeAgo(tweet.tweetDate)}</div>
             </div>
             <div className="content">{tweet.tweetDesc}</div>

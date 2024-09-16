@@ -1,42 +1,85 @@
+/* General container styling */
 .container {
-  max-width: 100%;
-  height: 100vh;
-  margin: 0 auto;
-  padding: 20px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0 16px;
+  background-color: black; /* Black background */
+  color: white; /* White text for contrast */
 }
 
-
-img{
-  width: 100px;
-  height: 300px;
-  display:inline-block;
+/* Logo styling */
+.logo img {
+  margin-bottom: 24px;
 }
-  
-.button {
-  display: block;
-  padding: 10px 20px;
-  margin: 10px;
-  font-size: 16px;
-  text-decoration: none;
+
+/* Typography styling */
+h1 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  color: #1da1f2; /* Twitter's primary blue color */
+  margin-bottom: 24px;
+}
+
+/* Button styling */
+.MuiButton-containedPrimary {
+  background-color: #1da1f2; /* Twitter's primary blue color */
   color: #fff;
-  background-color: #1da1f2;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-  
-.button:hover {
-  background-color: #0f89c9;
 }
 
-h1{
-  color: white;
-  margin-top: 10px;
-  margin-bottom: 30px;
+.MuiButton-containedSecondary {
+  background-color: #657786; /* Secondary color for buttons */
+  color: #fff;
 }
 
-.container{
-  background-color: black;
+.MuiButton-root {
+  border-radius: 8px;
+  padding: 8px 16px;
+  margin: 12px; /* Add margin between buttons */
+}
+
+/* Modal styles */
+.MuiDialog-paper {
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #333; /* Dark background for the modal */
+  color: #fff; /* White text for contrast */
+}
+
+.MuiDialogTitle-root {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+}
+
+.MuiDialogContent-root {
+  padding: 16px;
+}
+
+.MuiTextField-root {
+  margin-bottom: 16px;
+}
+
+.MuiTextField-input {
+  color: #fff; /* White text for inputs */
+}
+
+.MuiInputLabel-root {
+  color: #bbb; /* Light grey for labels */
+}
+
+.MuiButton-contained {
+  border-radius: 4px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .container {
+    padding: 16px;
+  }
+
+  .logo img {
+    width: 60px;
+  }
 }
