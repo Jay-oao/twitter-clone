@@ -35,4 +35,9 @@ public class Details {
     private Timestamp date_create;
     private Timestamp date_update;
 
+    public Details(Long id, String username, byte[] displayPicture) {
+        this.id = id;
+        this.username = username;
+        this.displayPicture = displayPicture;
+    }
 }

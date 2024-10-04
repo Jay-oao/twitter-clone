@@ -1,11 +1,8 @@
 package com.twitterClone.backend.Config;
 
 import com.twitterClone.backend.Entity.ChatMessage;
-import com.twitterClone.backend.Entity.Details;
 import com.twitterClone.backend.POJO.InputTweet;
 import com.twitterClone.backend.Resource.ChatRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;

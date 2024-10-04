@@ -1,6 +1,5 @@
 package com.twitterClone.backend.POJO;
 
-import com.twitterClone.backend.Entity.Tweets;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

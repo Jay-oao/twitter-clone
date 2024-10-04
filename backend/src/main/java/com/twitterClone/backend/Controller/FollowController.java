@@ -2,7 +2,6 @@ package com.twitterClone.backend.Controller;
 
 import com.twitterClone.backend.Entity.Details;
 import com.twitterClone.backend.Entity.Follow;
-import com.twitterClone.backend.Entity.Tweets;
 import com.twitterClone.backend.POJO.FollowRequest;
 import com.twitterClone.backend.POJO.Profile;
 import com.twitterClone.backend.POJO.TweetResponseInfo;
